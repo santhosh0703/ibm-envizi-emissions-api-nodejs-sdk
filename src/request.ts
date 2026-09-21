@@ -36,6 +36,7 @@ export async function makeApiRequest<T>(config: RequestConfig): Promise<T> {
     url: config.url,
     data: config.data,
     params: config.params,
+    responseType: config.responseType,
     headers: {
       ...client.getAuthHeader(),
       ...config.headers,

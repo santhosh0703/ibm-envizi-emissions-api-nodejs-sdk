@@ -274,13 +274,7 @@ export interface SearchRequest {
      * Optional pagination parameters for the search results.
      * Used to limit the number of results and implement paging.
      */
-    pagination?: Pagination;
-    /**
-     * Optional reranker toggle for factor and type searches.
-     * Defaults to true when omitted. Set to false to use semantic similarity
-     * results directly without cross-encoder reranking.
-     */
-    enableReranker?: boolean;
+    pagination?: Pagination
 } 
 
 /**

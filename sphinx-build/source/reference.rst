@@ -32,6 +32,8 @@ API
 .. js:autofunction:: RealEstate.calculate
 
 .. js:autofunction:: EconomicActivity.calculate
+   
+.. js:autofunction:: PhysicalActivity.calculate
 
 Type Recommender API
 ====================
@@ -48,6 +50,18 @@ Organizations can disable storage if they don't need their API calls to be audit
 .. js:autofunction:: AuditLog.getAuditConfig
 
 .. js:autofunction:: AuditLog.updateAuditConfig
+
+
+Audit Export API
+================
+
+The Audit Export API asynchronously generates an audit-data ZIP archive for an admin user. Call ``trigger`` to create an export, ``getStatus`` until it is complete, and ``download`` to retrieve the archive.
+
+.. js:autofunction:: AuditExport.trigger
+
+.. js:autofunction:: AuditExport.getStatus
+
+.. js:autofunction:: AuditExport.download
 
 
 Global Metadata API
@@ -136,6 +150,10 @@ Interfaces
 
 .. js:autoclass:: AuditLogResponse.AuditLogRequest
 
-.. js:autoclass:: TypeRecommenderResponse.TypeRecommenderResponse
+.. js:autoclass:: AuditExportResponse.AuditExportRequest
 
-.. js:autoclass:: TypeRecommenderResponse.ActivityRequest
+.. js:autoclass:: AuditExportResponse.AuditExportResponse
+
+.. js:autoclass:: AuditExportResponse.AuditExportStatusResponse
+
+.. js:autoclass:: AuditExportResponse.AuditExportLinks

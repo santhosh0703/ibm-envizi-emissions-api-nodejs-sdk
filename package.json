@@ -1,6 +1,6 @@
 {
   "name": "emissions-api-sdk",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "sdk for IBM Emissions APIs",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -36,17 +36,18 @@
   "license": "Apache-2.0",
   "resolutions": {
     "@babel/core": "^7.29.6",
-    "brace-expansion": "^5.0.6",
+    "brace-expansion": "^5.0.9",
+    "browserslist": "^4.28.7",
     "follow-redirects": "^1.16.0",
     "form-data": "^4.0.6",
     "handlebars": "^4.7.9",
-    "js-yaml": "^4.2.0",
-    "markdown-it": "^14.2.0",
+    "js-yaml": "^4.3.1",
+    "markdown-it": "^14.3.0",
     "minimatch": "^10.2.5",
     "test-exclude": "^7.0.1"
   },
   "dependencies": {
-    "axios": "1.16.0"
+    "axios": "1.18.0"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

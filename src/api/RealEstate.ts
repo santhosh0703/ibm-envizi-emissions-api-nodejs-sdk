@@ -52,7 +52,8 @@ import { makeApiRequest } from "../request";
     },
     "includeDetails": true
   };
- */
+* const resultWithAttribution = await calculate(requestWithAttribution);
+*/
 
 export async function calculate(
   payload: CommonRequest
