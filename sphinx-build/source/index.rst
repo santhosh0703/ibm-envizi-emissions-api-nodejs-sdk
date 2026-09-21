@@ -29,6 +29,7 @@ Supported Emission Types
 * **Transportation & distribution** – logistics and supply chain activities
 * **Real Estate** – emissions from commercial and residential properties
 * **Economic Activity** – spend-based emissions from business activities
+* **Physical Activity** – scope 3 emissions from physical activities with attribution for private companies (equity/debt or EVIC-based)
 * **Generic** – custom emission calculations
 
 The SDK is designed for embedding emission calculations in applications, building sustainability dashboards, automating large-scale datasets, and tracking carbon footprints.
@@ -37,7 +38,8 @@ Additional capabilities
 -----------------------
 
 * **Metadata API** – query supported types, areas, and units across endpoints
-* **Type Recommender API** – semantic search to identify likely activity types, with optional reranker control and scope in results
-* **Factor Search API** – search for emission factors with unit and scope filtering, with optional reranker control
+* **Type Recommender API** – semantic search to identify likely activity types
+* **Factor Search API** – search for emission factors with unit and scope filtering
 * **Usage API** – retrieve organization billing-period or historical usage
 * **Audit Log API** – manage whether API requests and responses are stored for auditing
+* **Audit Export API** – export, monitor, and download organization audit data

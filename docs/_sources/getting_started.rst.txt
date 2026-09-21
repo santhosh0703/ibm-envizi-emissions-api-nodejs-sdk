@@ -248,8 +248,7 @@ The SDK supports automatic currency conversion for API methods that accept monet
 Currency conversion is available for the following calculation methods:
 
 - ``EconomicActivity.calculate()``
-- ``RealEstate.calculate()``
-- ``PhysicalActivity.calculate()``
+- ``Calculation.calculate()``
 
 Supported Currencies
 ~~~~~~~~~~~~~~~~~~~~
@@ -626,3 +625,228 @@ The exchange rate database is automatically synchronized with the Treasury API t
 
 
 - ``source``: Source citation and license information
+
+Finance Emissions APIs
+----------------------
+
+The SDK supports three scope 3 finance-based emission APIs: **Real Estate**, **Physical Activity**, and **Economic Activity**. Each supports optional PCAF attribution to proportionally allocate emissions.
+
+Real Estate
+~~~~~~~~~~~
+
+Real Estate calculates scope 3 emissions from commercial and residential property. Attribution uses ``propertyValue`` to compute an attribution factor.
+
+**Without attribution:**
+
+.. code-block:: javascript
+
+  const result = await RealEstate.calculate({
+    "time": { "date": "2022-01-01" },
+    "location": { "country": "usa", "stateProvince": "new york" },
+    "activity": {
+      "type": "Commercial Real Estate:Office",
+      "value": 123456.0,
+      "unit": "m2"
+    },
+    "includeDetails": false
+  });
+
+**With attribution (property value based):**
+
+.. code-block:: javascript
+
+  const result = await RealEstate.calculate({
+    "time": { "date": "2022-01-01" },
+    "location": { "country": "usa", "stateProvince": "new york" },
+    "activity": {
+      "type": "Commercial Real Estate:Office",
+      "value": 123456.0,
+      "unit": "m2"
+    },
+    "attribution": {
+      "outstandingAmount": 1000000.0,
+      "propertyValue": 5000000.0
+    },
+    "includeDetails": true
+  });
+
+.. note::
+
+   Real estate attribution only accepts ``propertyValue``. Using ``totalEquity``, ``totalDebt``, ``evic``, or ``revenue`` will result in a 400 error.
+
+Physical Activity
+~~~~~~~~~~~~~~~~~
+
+Physical Activity calculates scope 3 emissions from physical activities. Attribution supports two methods: equity/debt for private companies, or EVIC for listed companies.
+
+**Without attribution:**
+
+.. code-block:: javascript
+
+  const result = await PhysicalActivity.calculate({
+    "time": { "date": "2022-01-01" },
+    "location": { "country": "usa", "stateProvince": "new york" },
+    "activity": {
+      "type": "Physical Activity Type",
+      "value": 123456.0,
+      "unit": "kg"
+    },
+    "includeDetails": false
+  });
+
+**With attribution (equity/debt — private companies):**
+
+.. code-block:: javascript
+
+  const result = await PhysicalActivity.calculate({
+    "time": { "date": "2022-01-01" },
+    "location": { "country": "usa", "stateProvince": "new york" },
+    "activity": {
+      "type": "Physical Activity Type",
+      "value": 123456.0,
+      "unit": "kg"
+    },
+    "attribution": {
+      "outstandingAmount": 1000000.0,
+      "totalEquity": 3000000.0,
+      "totalDebt": 2000000.0
+    },
+    "includeDetails": true
+  });
+
+**With attribution (EVIC — listed companies):**
+
+.. code-block:: javascript
+
+  const result = await PhysicalActivity.calculate({
+    "time": { "date": "2022-01-01" },
+    "location": { "country": "usa", "stateProvince": "new york" },
+    "activity": {
+      "type": "Physical Activity Type",
+      "value": 123456.0,
+      "unit": "kg"
+    },
+    "attribution": {
+      "outstandingAmount": 1000000.0,
+      "evic": 10000000.0
+    },
+    "includeDetails": true
+  });
+
+.. note::
+
+   Physical activity attribution does not accept ``propertyValue`` or ``revenue``. Use ``totalEquity + totalDebt`` for private companies, or ``evic`` for listed companies — not both.
+
+Economic Activity
+~~~~~~~~~~~~~~~~~
+
+Economic Activity calculates scope 3 spend-based emissions. Attribution supports equity/debt, EVIC, or revenue-based allocation.
+
+**Without attribution:**
+
+.. code-block:: javascript
+
+  const result = await EconomicActivity.calculate({
+    "time": { "date": "2022-01-01" },
+    "location": { "country": "usa", "stateProvince": "new york" },
+    "activity": {
+      "type": "Accomodation",
+      "value": 123456.0,
+      "unit": "usd"
+    },
+    "includeDetails": false
+  });
+
+**With attribution (revenue based):**
+
+.. code-block:: javascript
+
+  const result = await EconomicActivity.calculate({
+    "time": { "date": "2025-01-04" },
+    "location": { "country": "usa" },
+    "activity": {
+      "type": "accomodation",
+      "value": 1500.12,
+      "unit": "usd"
+    },
+    "attribution": {
+      "outstandingAmount": 500000.0,
+      "revenue": 2000000.0
+    },
+    "includeDetails": true
+  });
+
+**With attribution (equity/debt — private companies):**
+
+.. code-block:: javascript
+
+  const result = await EconomicActivity.calculate({
+    "time": { "date": "2025-01-04" },
+    "location": { "country": "usa" },
+    "activity": {
+      "type": "accomodation",
+      "value": 1500.12,
+      "unit": "usd"
+    },
+    "attribution": {
+      "outstandingAmount": 500000.0,
+      "totalEquity": 3000000.0,
+      "totalDebt": 2000000.0
+    },
+    "includeDetails": true
+  });
+
+**With attribution (EVIC — listed companies):**
+
+.. code-block:: javascript
+
+  const result = await EconomicActivity.calculate({
+    "time": { "date": "2025-01-04" },
+    "location": { "country": "usa" },
+    "activity": {
+      "type": "accomodation",
+      "value": 1500.12,
+      "unit": "usd"
+    },
+    "attribution": {
+      "outstandingAmount": 500000.0,
+      "evic": 10000000.0
+    },
+    "includeDetails": true
+  });
+
+.. note::
+
+   ``propertyValue`` is not supported for economic activity. ``totalEquity`` and ``totalDebt`` must always be provided together.
+
+Attribution Summary
+~~~~~~~~~~~~~~~~~~~
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 14 20 12 12 12
+
+   * - API
+     - ``propertyValue``
+     - ``totalEquity`` + ``totalDebt``
+     - ``evic``
+     - ``revenue``
+     - ``outstandingAmount``
+   * - Real Estate
+     - ✓
+     - ✗
+     - ✗
+     - ✗
+     - Required
+   * - Physical Activity
+     - ✗
+     - ✓
+     - ✓
+     - ✗
+     - Required
+   * - Economic Activity
+     - ✗
+     - ✓
+     - ✓
+     - ✓
+     - Required

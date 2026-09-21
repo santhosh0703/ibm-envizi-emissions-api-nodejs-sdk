@@ -1,4 +1,4 @@
-import { Method } from "axios";
+import { Method, ResponseType } from "axios";
 
 /**
  * Configuration for making HTTP requests.
@@ -29,6 +29,11 @@ export interface RequestConfig {
    * Optional HTTP headers to be included with the request.
    */
   headers?: Record<string, string>;
+
+  /**
+   * Optional response type expected from the API.
+   */
+  responseType?: ResponseType;
 }
 
 /**

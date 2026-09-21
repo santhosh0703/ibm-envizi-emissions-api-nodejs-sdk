@@ -72,7 +72,7 @@ const typeUnits = await Metadata.getUnits('Natural Gas'); // Units for specific 
 
 ## Type Recommender API
 
-Search for activity types using semantic search with optional unit and scope filtering. Reranking is enabled by default; set `enableReranker` to `false` to use semantic similarity ordering without cross-encoder reranking. Type results can include `scope`, the distinct GHG Protocol scopes associated with each activity type.
+Search for activity types using semantic search with optional unit and scope filtering:
 
 ```javascript
 import { TypeRecommender } from 'emissions-api-sdk';
@@ -96,17 +96,6 @@ const typesWithUnit = await TypeRecommender.search({
     "search": "office consumed electricity",
     "unit": "kWh"
   }
-});
-
-// Search without cross-encoder reranking
-const typesWithoutReranker = await TypeRecommender.search({
-  "location": {
-    "country": "usa"
-  },
-  "activity": {
-    "search": "office consumed electricity"
-  },
-  "enableReranker": false
 });
 
 // Search with scope filter
@@ -143,7 +132,7 @@ const typesWithAll = await TypeRecommender.search({
 
 ## Factor Search API
 
-Search for emission factors with optional unit and scope filtering. Reranking is enabled by default; set `enableReranker` to `false` to use semantic similarity ordering without cross-encoder reranking.
+Search for emission factors with optional unit and scope filtering:
 
 ```javascript
 import { Factor } from 'emissions-api-sdk';
@@ -170,17 +159,6 @@ const resultsWithUnit = await Factor.search({
   "location": {
     "country": "USA"
   }
-});
-
-// Search without cross-encoder reranking
-const resultsWithoutReranker = await Factor.search({
-  "activity": {
-    "search": "employee business travel by air"
-  },
-  "location": {
-    "country": "USA"
-  },
-  "enableReranker": false
 });
 
 // Search with scope filter
@@ -234,6 +212,29 @@ await AuditLog.update({ logRequest: false, logResponse: false });
 // Enable only request storage
 await AuditLog.update({ logRequest: true, logResponse: false });
 ```
+
+## Audit Export API
+
+Admin users can export audit data for a date range. The export is asynchronous: submit the request, poll until it is complete, then download the ZIP archive. All three endpoints require an admin JWT token.
+
+```javascript
+import { AuditExport } from 'emissions-api-sdk';
+
+const auditExport = await AuditExport.trigger({
+  fromDate: '2025-01-01',
+  toDate: '2025-03-31',
+  apiName: 'location'
+});
+
+// Repeat this request until status is COMPLETED.
+const status = await AuditExport.getStatus(auditExport.requestId);
+
+if (status.status === 'COMPLETED') {
+  const auditExportZip = await AuditExport.download(auditExport.requestId);
+}
+```
+
+The request dates use `yyyy-MM-dd`. `fromDate` must be on or after `2025-01-01`, `toDate` must be no later than the previous calendar day, and `apiName` is an optional case-insensitive endpoint filter. A completed export is available for seven days. See the [Audit Export API reference](https://ibm.github.io/ibm-envizi-emissions-api-nodejs-sdk/reference.html#audit-export-api) for the request and response details.
 
 ## Authentication
 

@@ -53,6 +53,51 @@ import { makeApiRequest } from "../request";
     "includeDetails": true
   };
  * const resultWithAttribution = await calculate(requestWithAttribution);
+ *
+ * @example
+ * // Economic activity request with attribution (equity/debt based for private companies)
+ * const requestWithEquityDebt = {
+     "time": {
+       "date": "2025-01-04"
+     },
+     "location": {
+       "country": "usa"
+     },
+     "activity": {
+       "type": "accomodation",
+       "value": 1500.12,
+       "unit": "usd"
+     },
+     "attribution": {
+       "outstandingAmount": 500000.0,
+       "totalEquity": 3000000.0,
+       "totalDebt": 2000000.0
+     },
+     "includeDetails": true
+   };
+ * const resultWithEquityDebt = await calculate(requestWithEquityDebt);
+ *
+ * @example
+ * // Economic activity request with attribution (EVIC based for listed companies)
+ * const requestWithEvic = {
+     "time": {
+       "date": "2025-01-04"
+     },
+     "location": {
+       "country": "usa"
+     },
+     "activity": {
+       "type": "accomodation",
+       "value": 1500.12,
+       "unit": "usd"
+     },
+     "attribution": {
+       "outstandingAmount": 500000.0,
+       "evic": 10000000.0
+     },
+     "includeDetails": true
+   };
+ * const resultWithEvic = await calculate(requestWithEvic);
  */
 
 export async function calculate(

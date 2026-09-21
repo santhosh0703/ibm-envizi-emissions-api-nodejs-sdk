@@ -14,6 +14,7 @@ export * as PhysicalActivity from './api/PhysicalActivity';
 export * as Metadata from './api/Metadata';
 export * as TypeRecommender from './api/TypeRecommender';
 export * as AuditLog from './api/AuditLog';
+export * as AuditExport from './api/AuditExport';
 export { ClientConfig } from './interfaces/Config';
 
 // Common interfaces
@@ -44,3 +45,10 @@ export { UnitResponse } from './interfaces/response/UnitResponse';
 export { UsageResponse } from './interfaces/response/UsageResponse';
 export { TypeRecommenderResponse, ActivityRequest } from './interfaces/response/TypeRecommenderResponse';
 export { AuditLogResponse, AuditLogRequest } from './interfaces/response/AuditLogResponse';
+export {
+  AuditExportRequest,
+  AuditExportResponse,
+  AuditExportStatus,
+  AuditExportStatusResponse,
+  AuditExportLinks
+} from './interfaces/response/AuditExportResponse';

@@ -15,6 +15,4 @@ export interface ActivityRequest {
     activityDescription: string;
 
     confidence: number;
-
-    scope?: string[];
 }

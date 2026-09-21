@@ -579,25 +579,6 @@ Only refreshes if the token was not provided by the user and is expiring within 
 </div>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// Search without cross-encoder reranking</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">searchWithoutReranker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="s2">&quot;time&quot;</span><span class="o">:</span><span class="p">{</span>
-<span class="w">     </span><span class="s2">&quot;date&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2020-06-10&quot;</span>
-<span class="w">   </span><span class="p">},</span>
-<span class="w">   </span><span class="s2">&quot;activity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="s2">&quot;search&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;travel&quot;</span>
-<span class="w">   </span><span class="p">},</span>
-<span class="w">   </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;USA&quot;</span>
-<span class="w">   </span><span class="p">},</span>
-<span class="w">   </span><span class="s2">&quot;enableReranker&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w"> </span><span class="p">};</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">search</span><span class="p">(</span><span class="nx">searchWithoutReranker</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="admonition-example admonition">
-<p class="admonition-title">Example</p>
 <div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// Search with optional unit parameter</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">searchWithUnit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">   </span><span class="s2">&quot;time&quot;</span><span class="o">:</span><span class="p">{</span>
@@ -934,6 +915,7 @@ Only refreshes if the token was not provided by the user and is expiring within 
 <span class="w">   </span><span class="p">},</span>
 <span class="w">   </span><span class="s2">&quot;includeDetails&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="w"> </span><span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">resultWithAttribution</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">calculate</span><span class="p">(</span><span class="nx">requestWithAttribution</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1000,6 +982,146 @@ Supports optional attribution with revenue for proportional allocation.</p>
 </pre></div>
 </div>
 </div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// Economic activity request with attribution (equity/debt based for private companies)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">requestWithEquityDebt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;time&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;date&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2025-01-04&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;usa&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;activity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;accomodation&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;value&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1500.12</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;unit&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;usd&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;attribution&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;outstandingAmount&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">500000.0</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;totalEquity&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">3000000.0</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;totalDebt&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">2000000.0</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;includeDetails&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">resultWithEquityDebt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">calculate</span><span class="p">(</span><span class="nx">requestWithEquityDebt</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// Economic activity request with attribution (EVIC based for listed companies)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">requestWithEvic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;time&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;date&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2025-01-04&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;usa&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;activity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;accomodation&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;value&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1500.12</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;unit&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;usd&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;attribution&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;outstandingAmount&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">500000.0</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;evic&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">10000000.0</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;includeDetails&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">resultWithEvic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">calculate</span><span class="p">(</span><span class="nx">requestWithEvic</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="PhysicalActivity.calculate">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">PhysicalActivity</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">calculate</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PhysicalActivity.calculate" title="Link to this definition">¶</a></dt>
+<dd><p>Performs scope 3 Physical activity emission calculations by making a POST request to the physical activity API endpoint.
+Supports attribution for private companies using equity/debt based calculations or EVIC (Enterprise Value Including Cash).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>payload</strong> (<span class="sphinx_js-type">CommonRequest</span>) – The request data to be sent to the API</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_js-type">Promise&lt;EmissionResponse | EmissionResponseWithDetails&gt;</span> – A promise that resolves to the emission calculation result. Returns EmissionResponseWithDetails if includeDetails is true, otherwise EmissionResponse</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// Basic physical activity request</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="s2">&quot;time&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;date&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2025-01-23&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;usa&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;activity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;commercial real estate&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;value&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;unit&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;km2&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;includeDetails&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">calculate</span><span class="p">(</span><span class="nx">request</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// Physical activity request with attribution (equity/debt based for private companies)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">requestWithEquityDebt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="s2">&quot;time&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;date&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2025-01-23&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;usa&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;activity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;commercial real estate&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;value&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;unit&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;km2&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;attribution&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;outstandingAmount&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1000000</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;totalEquity&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">3000000</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;totalDebt&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">2000000</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;includeDetails&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">resultWithEquityDebt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">calculate</span><span class="p">(</span><span class="nx">requestWithEquityDebt</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// Physical activity request with attribution (EVIC based)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">requestWithEVIC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="s2">&quot;time&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;date&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2025-01-23&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;usa&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;activity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;commercial real estate&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;value&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;unit&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;km2&quot;</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;attribution&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="s2">&quot;outstandingAmount&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1000000.0</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;evic&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">10000000.0</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="s2">&quot;includeDetails&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">resultWithEVIC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">calculate</span><span class="p">(</span><span class="nx">requestWithEVIC</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
 </dd></dl>
 
 </section>
@@ -1008,7 +1130,7 @@ Supports optional attribution with revenue for proportional allocation.</p>
 <dl class="js function">
 <dt class="sig sig-object js" id="TypeRecommender.search">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">TypeRecommender</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">search</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TypeRecommender.search" title="Link to this definition">¶</a></dt>
-<dd><p>Search for activity types using semantic search with location, time, and license context. Supports pagination and optional reranker control.</p>
+<dd><p>Search for activity types using semantic search with location, time, and license context. Supports pagination.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1066,21 +1188,6 @@ Supports optional attribution with revenue for proportional allocation.</p>
 <span class="w">   </span><span class="s2">&quot;activity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">     </span><span class="s2">&quot;search&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;renewable energy&quot;</span>
 <span class="w">   </span><span class="p">}</span>
-<span class="w"> </span><span class="p">});</span>
-</pre></div>
-</div>
-</div>
-<div class="admonition-example admonition">
-<p class="admonition-title">Example</p>
-<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// Search without cross-encoder reranking</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">search</span><span class="p">({</span>
-<span class="w">   </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="s2">&quot;country&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;usa&quot;</span>
-<span class="w">   </span><span class="p">},</span>
-<span class="w">   </span><span class="s2">&quot;activity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="s2">&quot;search&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;electricity&quot;</span>
-<span class="w">   </span><span class="p">},</span>
-<span class="w">   </span><span class="s2">&quot;enableReranker&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
 <span class="w"> </span><span class="p">});</span>
 </pre></div>
 </div>
@@ -1190,6 +1297,80 @@ gracefully and the current configuration is returned.</p>
 <div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">update</span><span class="p">({</span><span class="w"> </span><span class="nx">logRequest</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span><span class="w"> </span><span class="nx">logResponse</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="w"> </span><span class="p">});</span>
 <span class="c1">// If already set to these values:</span>
 <span class="c1">// { logRequest: false, logResponse: false, message: &quot;No change in audit log configuration&quot; }</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+<section id="audit-export-api">
+<h2>Audit Export API<a class="headerlink" href="#audit-export-api" title="Link to this heading">¶</a></h2>
+<p>The Audit Export API asynchronously generates an audit-data ZIP archive for an admin user. Call <code class="docutils literal notranslate"><span class="pre">trigger</span></code> to create an export, <code class="docutils literal notranslate"><span class="pre">getStatus</span></code> until it is complete, and <code class="docutils literal notranslate"><span class="pre">download</span></code> to retrieve the archive.</p>
+<dl class="js function">
+<dt class="sig sig-object js" id="AuditExport.trigger">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">AuditExport</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">trigger</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AuditExport.trigger" title="Link to this definition">¶</a></dt>
+<dd><p>Triggers an asynchronous audit data export.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>payload</strong> (<span class="sphinx_js-type">AuditExportRequest</span>) – Date range and optional API-name filter for the export</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_js-type">Promise&lt;AuditExportResponse&gt;</span> – The accepted export request, including its request ID</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">auditExport</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">trigger</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">fromDate</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2025-01-01&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">toDate</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2025-03-31&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">apiName</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;location&quot;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="AuditExport.getStatus">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">AuditExport</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getStatus</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requestId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AuditExport.getStatus" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves the processing status of an audit export.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>requestId</strong> (<span class="sphinx_js-type">string</span>) – Request ID returned by trigger</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_js-type">Promise&lt;AuditExportStatusResponse&gt;</span> – Current export status and, when complete, download details</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getStatus</span><span class="p">(</span><span class="nx">auditExport</span><span class="p">.</span><span class="nx">requestId</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="AuditExport.download">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">AuditExport</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">download</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requestId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AuditExport.download" title="Link to this definition">¶</a></dt>
+<dd><p>Downloads a completed audit export as a ZIP archive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>requestId</strong> (<span class="sphinx_js-type">string</span>) – Request ID returned by trigger</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_js-type">Promise&lt;Buffer&lt;ArrayBufferLike&gt;&gt;</span> – ZIP archive containing audit-export.csv</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">auditExportZip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">download</span><span class="p">(</span><span class="nx">auditExport</span><span class="p">.</span><span class="nx">requestId</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1639,16 +1820,43 @@ Used to configure which parts of API interactions should be logged.</p>
 </dd></dl>
 
 <dl class="js interface">
-<dt class="sig sig-object js" id="TypeRecommenderResponse.TypeRecommenderResponse">
-<em class="property"><span class="k"><span class="pre">interface</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">TypeRecommenderResponse</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">TypeRecommenderResponse</span></span></span><a class="headerlink" href="#TypeRecommenderResponse.TypeRecommenderResponse" title="Link to this definition">¶</a></dt>
-<dd><p>Interface for type recommender API</p>
-<p><em>exported from</em> <code class="xref js js-mod docutils literal notranslate"><span class="pre">interfaces.response.TypeRecommenderResponse</span></code></p>
+<dt class="sig sig-object js" id="AuditExportResponse.AuditExportRequest">
+<em class="property"><span class="k"><span class="pre">interface</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">AuditExportResponse</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">AuditExportRequest</span></span></span><a class="headerlink" href="#AuditExportResponse.AuditExportRequest" title="Link to this definition">¶</a></dt>
+<dd><p>Request body used to trigger an audit data export.</p>
+<blockquote>
+<div><p>AuditExportRequest</p>
+</div></blockquote>
+<p><em>exported from</em> <code class="xref js js-mod docutils literal notranslate"><span class="pre">interfaces.response.AuditExportResponse</span></code></p>
 </dd></dl>
 
 <dl class="js interface">
-<dt class="sig sig-object js" id="TypeRecommenderResponse.ActivityRequest">
-<em class="property"><span class="k"><span class="pre">interface</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">TypeRecommenderResponse</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">ActivityRequest</span></span></span><a class="headerlink" href="#TypeRecommenderResponse.ActivityRequest" title="Link to this definition">¶</a></dt>
-<dd><p><em>exported from</em> <code class="xref js js-mod docutils literal notranslate"><span class="pre">interfaces.response.TypeRecommenderResponse</span></code></p>
+<dt class="sig sig-object js" id="AuditExportResponse.AuditExportResponse">
+<em class="property"><span class="k"><span class="pre">interface</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">AuditExportResponse</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">AuditExportResponse</span></span></span><a class="headerlink" href="#AuditExportResponse.AuditExportResponse" title="Link to this definition">¶</a></dt>
+<dd><p>Response returned when an audit export is accepted.</p>
+<blockquote>
+<div><p>AuditExportResponse</p>
+</div></blockquote>
+<p><em>exported from</em> <code class="xref js js-mod docutils literal notranslate"><span class="pre">interfaces.response.AuditExportResponse</span></code></p>
+</dd></dl>
+
+<dl class="js interface">
+<dt class="sig sig-object js" id="AuditExportResponse.AuditExportStatusResponse">
+<em class="property"><span class="k"><span class="pre">interface</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">AuditExportResponse</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">AuditExportStatusResponse</span></span></span><a class="headerlink" href="#AuditExportResponse.AuditExportStatusResponse" title="Link to this definition">¶</a></dt>
+<dd><p>Response returned when checking an audit export’s status.</p>
+<blockquote>
+<div><p>AuditExportStatusResponse</p>
+</div></blockquote>
+<p><em>exported from</em> <code class="xref js js-mod docutils literal notranslate"><span class="pre">interfaces.response.AuditExportResponse</span></code></p>
+</dd></dl>
+
+<dl class="js interface">
+<dt class="sig sig-object js" id="AuditExportResponse.AuditExportLinks">
+<em class="property"><span class="k"><span class="pre">interface</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="n"><span class="pre">AuditExportResponse</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">AuditExportLinks</span></span></span><a class="headerlink" href="#AuditExportResponse.AuditExportLinks" title="Link to this definition">¶</a></dt>
+<dd><p>Follow-up links returned by the audit export API.</p>
+<blockquote>
+<div><p>AuditExportLinks</p>
+</div></blockquote>
+<p><em>exported from</em> <code class="xref js js-mod docutils literal notranslate"><span class="pre">interfaces.response.AuditExportResponse</span></code></p>
 </dd></dl>
 
 </section>
@@ -1733,6 +1941,7 @@ Used to configure which parts of API interactions should be logged.</p>
 <li><a class="reference internal" href="#TransportationAndDistribution.calculate"><code class="docutils literal notranslate"><span class="pre">TransportationAndDistribution.calculate()</span></code></a></li>
 <li><a class="reference internal" href="#RealEstate.calculate"><code class="docutils literal notranslate"><span class="pre">RealEstate.calculate()</span></code></a></li>
 <li><a class="reference internal" href="#EconomicActivity.calculate"><code class="docutils literal notranslate"><span class="pre">EconomicActivity.calculate()</span></code></a></li>
+<li><a class="reference internal" href="#PhysicalActivity.calculate"><code class="docutils literal notranslate"><span class="pre">PhysicalActivity.calculate()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#type-recommender-api">Type Recommender API</a><ul>
@@ -1742,6 +1951,12 @@ Used to configure which parts of API interactions should be logged.</p>
 <li><a class="reference internal" href="#audit-log-api">Audit Log API</a><ul>
 <li><a class="reference internal" href="#AuditLog.getAuditConfig"><code class="docutils literal notranslate"><span class="pre">AuditLog.getAuditConfig()</span></code></a></li>
 <li><a class="reference internal" href="#AuditLog.updateAuditConfig"><code class="docutils literal notranslate"><span class="pre">AuditLog.updateAuditConfig()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#audit-export-api">Audit Export API</a><ul>
+<li><a class="reference internal" href="#AuditExport.trigger"><code class="docutils literal notranslate"><span class="pre">AuditExport.trigger()</span></code></a></li>
+<li><a class="reference internal" href="#AuditExport.getStatus"><code class="docutils literal notranslate"><span class="pre">AuditExport.getStatus()</span></code></a></li>
+<li><a class="reference internal" href="#AuditExport.download"><code class="docutils literal notranslate"><span class="pre">AuditExport.download()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#global-metadata-api">Global Metadata API</a><ul>
@@ -1790,8 +2005,10 @@ Used to configure which parts of API interactions should be logged.</p>
 <li><a class="reference internal" href="#Config.ClientConfig"><code class="docutils literal notranslate"><span class="pre">Config.ClientConfig</span></code></a></li>
 <li><a class="reference internal" href="#AuditLogResponse.AuditLogResponse"><code class="docutils literal notranslate"><span class="pre">AuditLogResponse.AuditLogResponse</span></code></a></li>
 <li><a class="reference internal" href="#AuditLogResponse.AuditLogRequest"><code class="docutils literal notranslate"><span class="pre">AuditLogResponse.AuditLogRequest</span></code></a></li>
-<li><a class="reference internal" href="#TypeRecommenderResponse.TypeRecommenderResponse"><code class="docutils literal notranslate"><span class="pre">TypeRecommenderResponse.TypeRecommenderResponse</span></code></a></li>
-<li><a class="reference internal" href="#TypeRecommenderResponse.ActivityRequest"><code class="docutils literal notranslate"><span class="pre">TypeRecommenderResponse.ActivityRequest</span></code></a></li>
+<li><a class="reference internal" href="#AuditExportResponse.AuditExportRequest"><code class="docutils literal notranslate"><span class="pre">AuditExportResponse.AuditExportRequest</span></code></a></li>
+<li><a class="reference internal" href="#AuditExportResponse.AuditExportResponse"><code class="docutils literal notranslate"><span class="pre">AuditExportResponse.AuditExportResponse</span></code></a></li>
+<li><a class="reference internal" href="#AuditExportResponse.AuditExportStatusResponse"><code class="docutils literal notranslate"><span class="pre">AuditExportResponse.AuditExportStatusResponse</span></code></a></li>
+<li><a class="reference internal" href="#AuditExportResponse.AuditExportLinks"><code class="docutils literal notranslate"><span class="pre">AuditExportResponse.AuditExportLinks</span></code></a></li>
 </ul>
 </li>
 </ul>

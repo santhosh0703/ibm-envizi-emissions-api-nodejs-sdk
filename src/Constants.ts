@@ -14,6 +14,9 @@ export const ECONOMIC_ACTIVITY_API_PATH = "/v3/carbon/economic-activity";
 export const REAL_ESTATE_API_PATH = "/v3/carbon/real-estate";
 export const PHYSICAL_ACTIVITY_API_PATH = "/v3/carbon/physical-activity";
 export const AUDIT_LOG_API_PATH = "/v3/carbon/admin/audit-log";
+export const AUDIT_EXPORT_API_PATH = "/v3/carbon/audit";
+export const AUDIT_EXPORT_STATUS_API_PATH = "/v3/carbon/audit/status";
+export const AUDIT_EXPORT_DOWNLOAD_API_PATH = "/v3/carbon/audit/download";
 
 export const TYPE_RECOMMENDER_API_PATH = "/v3/carbon/recommender/type/search";
 
