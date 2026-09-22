@@ -60,6 +60,9 @@ export async function retrieveFactor(
  * @return {Promise<SearchResponse>} A promise that resolves to the search results returned by the API
  * @throws {Error} May throw an error if the API request fails
  *
+ * The API applies cross-encoder reranking by default. Set `enableReranker` to
+ * `false` to keep semantic similarity ordering without reranking.
+ *
  * @example
  * // Basic search
  * const searchRequest = {
@@ -74,6 +77,19 @@ export async function retrieveFactor(
     }
   };
  * const results = await search(searchRequest);
+ *
+ * @example
+ * // Search without cross-encoder reranking
+ * const searchWithoutReranker = {
+    "activity": {
+      "search": "travel"
+    },
+    "location": {
+      "country": "USA"
+    },
+    "enableReranker": false
+  };
+ * const results = await search(searchWithoutReranker);
  *
  * @example
  * // Search with optional unit parameter

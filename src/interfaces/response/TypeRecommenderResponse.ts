@@ -15,4 +15,7 @@ export interface ActivityRequest {
     activityDescription: string;
 
     confidence: number;
+
+    /** Distinct GHG Protocol scopes associated with the activity type. */
+    scope?: string[];
 }

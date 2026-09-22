@@ -72,7 +72,7 @@ const typeUnits = await Metadata.getUnits('Natural Gas'); // Units for specific 
 
 ## Type Recommender API
 
-Search for activity types using semantic search with optional unit and scope filtering:
+Search for activity types using semantic search with optional unit and scope filtering. Reranking is enabled by default; set `enableReranker` to `false` to use semantic similarity ordering without cross-encoder reranking. Type results can include `scope`, the distinct GHG Protocol scopes associated with each activity type.
 
 ```javascript
 import { TypeRecommender } from 'emissions-api-sdk';
@@ -96,6 +96,17 @@ const typesWithUnit = await TypeRecommender.search({
     "search": "office consumed electricity",
     "unit": "kWh"
   }
+});
+
+// Search without cross-encoder reranking
+const typesWithoutReranker = await TypeRecommender.search({
+  "location": {
+    "country": "usa"
+  },
+  "activity": {
+    "search": "office consumed electricity"
+  },
+  "enableReranker": false
 });
 
 // Search with scope filter
@@ -132,7 +143,7 @@ const typesWithAll = await TypeRecommender.search({
 
 ## Factor Search API
 
-Search for emission factors with optional unit and scope filtering:
+Search for emission factors with optional unit and scope filtering. Reranking is enabled by default; set `enableReranker` to `false` to use semantic similarity ordering without cross-encoder reranking.
 
 ```javascript
 import { Factor } from 'emissions-api-sdk';
@@ -159,6 +170,17 @@ const resultsWithUnit = await Factor.search({
   "location": {
     "country": "USA"
   }
+});
+
+// Search without cross-encoder reranking
+const resultsWithoutReranker = await Factor.search({
+  "activity": {
+    "search": "employee business travel by air"
+  },
+  "location": {
+    "country": "USA"
+  },
+  "enableReranker": false
 });
 
 // Search with scope filter
