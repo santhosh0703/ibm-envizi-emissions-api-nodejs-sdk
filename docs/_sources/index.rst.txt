@@ -38,8 +38,8 @@ Additional capabilities
 -----------------------
 
 * **Metadata API** – query supported types, areas, and units across endpoints
-* **Type Recommender API** – semantic search to identify likely activity types
-* **Factor Search API** – search for emission factors with unit and scope filtering
+* **Type Recommender API** – semantic search to identify likely activity types, with optional reranker control and scope in results
+* **Factor Search API** – search for emission factors with unit and scope filtering, with optional reranker control
 * **Usage API** – retrieve organization billing-period or historical usage
 * **Audit Log API** – manage whether API requests and responses are stored for auditing
 * **Audit Export API** – export, monitor, and download organization audit data
