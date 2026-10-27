@@ -120,6 +120,17 @@ const typesWithScope = await TypeRecommender.search({
   }
 });
 
+// Search restricted to a specific factor set
+const typesWithFactorSet = await TypeRecommender.search({
+  "location": {
+    "country": "usa"
+  },
+  "activity": {
+    "search": "electricity",
+    "factorSet": "EPA"
+  }
+});
+
 // Search with pagination and filters
 const typesWithAll = await TypeRecommender.search({
   "location": {
@@ -204,6 +215,17 @@ const resultsWithBoth = await Factor.search({
   "location": {
     "country": "USA",
     "stateProvince": "california"
+  }
+});
+
+// Search restricted to a specific factor set
+const resultsWithFactorSet = await Factor.search({
+  "activity": {
+    "search": "electricity",
+    "factorSet": "EPA"
+  },
+  "location": {
+    "country": "USA"
   }
 });
 ```

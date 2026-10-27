@@ -140,6 +140,22 @@ export async function retrieveFactor(
     }
   };
  * const results = await search(searchWithBoth);
+ *
+ * @example
+ * // Search restricted to a specific factor set
+ * const searchWithFactorSet = {
+    "time":{
+      "date": "2020-06-10"
+    },
+    "activity": {
+      "search": "electricity",
+      "factorSet": "EPA"
+    },
+    "location": {
+      "country": "USA"
+    }
+  };
+ * const results = await search(searchWithFactorSet);
  */
 export async function search(
   payload: SearchRequest

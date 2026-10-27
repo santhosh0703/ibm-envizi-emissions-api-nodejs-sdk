@@ -164,9 +164,13 @@ export interface SearchActivity {
   /**
    * Optional scope(1,2,3,3.1 to 3.15) for search activity.
    */
-
   scope?: string;
-   
+
+  /**
+   * Optional factor set identifier to restrict search results to a specific
+   * factor set (e.g. "EPA", "DEFRA").
+   */
+  factorSet?: string;
 }
 
 /**

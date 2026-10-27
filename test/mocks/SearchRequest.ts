@@ -64,4 +64,18 @@ export const SearchPayloadWithBoth: SearchRequest = {
   }
 };
 
+// Search payload with factorSet parameter
+export const SearchPayloadWithFactorSet: SearchRequest = {
+  location: {
+    "country": "usa"
+  },
+  time: {
+    date: "2025-06-10",
+  },
+  activity: {
+    "search": "electricity",
+    "factorSet": "EPA"
+  }
+};
+
 export default SearchPayload;

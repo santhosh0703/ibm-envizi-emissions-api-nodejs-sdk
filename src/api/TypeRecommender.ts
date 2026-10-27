@@ -115,6 +115,18 @@ import { makeApiRequest } from "../request";
       "size": 10
     }
   });
+ *
+ * @example
+ * // Search restricted to a specific factor set
+ * const result = await search({
+    "location": {
+      "country": "usa"
+    },
+    "activity": {
+      "search": "electricity",
+      "factorSet": "EPA"
+    }
+  });
  */
 export async function search(
   payload: SearchRequest
